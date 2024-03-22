@@ -10,8 +10,8 @@ import {
 } from "components/primitives/drawer-primitives";
 
 interface DrawerProps {
-  title: React.ReactNode;
-  description: React.ReactNode;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   children: React.ReactNode;
   trigger: React.ReactNode;
   showCloseButton?: boolean;
@@ -22,10 +22,12 @@ export const Drawer = ({ title, description, children, showCloseButton = true, t
     <InternalDrawer>
       <DrawerTrigger>{trigger}</DrawerTrigger>
       <DrawerContent className="bg-white">
-        <DrawerHeader>
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
-        </DrawerHeader>
+        {title ? (
+          <DrawerHeader>
+            <DrawerTitle>{title}</DrawerTitle>
+            {description ? <DrawerDescription>{description}</DrawerDescription> : null}
+          </DrawerHeader>
+        ) : null}
         <DrawerFooter className="">{children}</DrawerFooter>
         {showCloseButton ? (
           <div className="border-t flex items-center justify-center">
