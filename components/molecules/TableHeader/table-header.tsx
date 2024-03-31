@@ -71,12 +71,16 @@ const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle
           ""
         )}
         <ClientOnly>
-          <PaginationResult
-            total={metaInfo.itemCount}
-            className="hidden !translate-y-[2px]  md:inline-flex"
-            metaInfo={metaInfo}
-            entity={entity}
-          />
+          {() => (
+            <>
+              <PaginationResult
+                total={metaInfo.itemCount}
+                className="hidden !translate-y-[2px]  md:inline-flex"
+                metaInfo={metaInfo}
+                entity={entity}
+              />
+            </>
+          )}
         </ClientOnly>
       </div>
       <div className="flex flex-col-reverse items-start gap-3 md:flex-row md:items-end ">

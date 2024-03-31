@@ -110,34 +110,38 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
         </div>
         <div className="mt-6 grid gap-6">
           <ClientOnly>
-            {repoIds.length > 0 ? (
+            {() => (
               <>
-                <div className="flex flex-col lg:flex-row gap-6">
-                  <RepositoryStatCard
-                    type="pulls"
-                    stats={stats?.data?.pull_requests}
-                    isLoading={isLoadingStats}
-                    hasError={isStatsError}
-                  />
-                  <RepositoryStatCard
-                    type="issues"
-                    stats={stats?.data?.issues}
-                    isLoading={isLoadingStats}
-                    hasError={isStatsError}
-                  />
-                  <RepositoryStatCard
-                    type="engagement"
-                    stats={stats?.data?.repos}
-                    isLoading={isLoadingStats}
-                    hasError={isStatsError}
-                  />
-                </div>
-                <Repositories repositories={repoIds} showSearch={false} />
+                {repoIds.length > 0 ? (
+                  <>
+                    <div className="flex flex-col lg:flex-row gap-6">
+                      <RepositoryStatCard
+                        type="pulls"
+                        stats={stats?.data?.pull_requests}
+                        isLoading={isLoadingStats}
+                        hasError={isStatsError}
+                      />
+                      <RepositoryStatCard
+                        type="issues"
+                        stats={stats?.data?.issues}
+                        isLoading={isLoadingStats}
+                        hasError={isStatsError}
+                      />
+                      <RepositoryStatCard
+                        type="engagement"
+                        stats={stats?.data?.repos}
+                        isLoading={isLoadingStats}
+                        hasError={isStatsError}
+                      />
+                    </div>
+                    <Repositories repositories={repoIds} showSearch={false} />
+                  </>
+                ) : (
+                  <Card className="bg-transparent">
+                    <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
+                  </Card>
+                )}
               </>
-            ) : (
-              <Card className="bg-transparent">
-                <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
-              </Card>
             )}
           </ClientOnly>
         </div>

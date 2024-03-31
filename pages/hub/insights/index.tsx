@@ -182,14 +182,18 @@ const InsightsHub: WithPageLayout = () => {
         ) : null}
 
         <ClientOnly>
-          {!session && featuredInsightsLoading ? (
-            <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
-          ) : featuredInsightsError ? (
-            "Error..."
-          ) : (
-            featuredInsightsData.map((insight) => {
-              return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} isEditable={false} />;
-            })
+          {() => (
+            <>
+              {!session && featuredInsightsLoading ? (
+                <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
+              ) : featuredInsightsError ? (
+                "Error..."
+              ) : (
+                featuredInsightsData.map((insight) => {
+                  return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} isEditable={false} />;
+                })
+              )}
+            </>
           )}
         </ClientOnly>
       </section>

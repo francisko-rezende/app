@@ -29,15 +29,19 @@ const SuggestedRepositoriesList = ({
 
       <div className="flex flex-col gap-3 mt-6">
         <ClientOnly>
-          {isLoading ? (
+          {() => (
             <>
-              <SkeletonWrapper count={3} classNames="w-3/4" height={60} radius={10} />
-            </>
-          ) : (
-            <>
-              {reposData.map((item, index) => (
-                <SuggestedRepository key={index} data={item} loadingData={loadingData} onAddRepo={onAddRepo} />
-              ))}
+              {isLoading ? (
+                <>
+                  <SkeletonWrapper count={3} classNames="w-3/4" height={60} radius={10} />
+                </>
+              ) : (
+                <>
+                  {reposData.map((item, index) => (
+                    <SuggestedRepository key={index} data={item} loadingData={loadingData} onAddRepo={onAddRepo} />
+                  ))}
+                </>
+              )}
             </>
           )}
         </ClientOnly>

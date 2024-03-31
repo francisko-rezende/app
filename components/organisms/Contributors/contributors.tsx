@@ -228,13 +228,17 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
             </div>
           )}
           <ClientOnly>
-            <ContributorTable
-              handleSelectContributors={onSelectContributor}
-              loading={isLoading}
-              topic={topic}
-              contributors={data}
-              selectedContributors={selectedContributors}
-            ></ContributorTable>
+            {() => (
+              <>
+                <ContributorTable
+                  handleSelectContributors={onSelectContributor}
+                  loading={isLoading}
+                  topic={topic}
+                  contributors={data}
+                  selectedContributors={selectedContributors}
+                ></ContributorTable>
+              </>
+            )}
           </ClientOnly>
         </div>
       )}

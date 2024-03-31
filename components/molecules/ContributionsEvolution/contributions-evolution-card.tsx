@@ -133,21 +133,25 @@ export default function ContributionsEvolutionCard(props: Props) {
           <div className="mb-3 grid " style={{ height: "auto" }}>
             <div>
               <ClientOnly>
-                <ResponsiveBar
-                  data={formattedData}
-                  keys={dataTypes as unknown as string[]}
-                  indexBy={"startTime"}
-                  axisBottom={{ tickSize: 0 }}
-                  axisLeft={null}
-                  enableLabel={false}
-                  enableGridY={false}
-                  labelFormat={""}
-                  margin={{ top: 0, right: 40, bottom: 30, left: 40 }}
-                  motionConfig="stiff"
-                  padding={0.5}
-                  colors={(d) => colors[d.id as keyof typeof colors]}
-                  tooltipLabel={(d) => labels[d.id as keyof typeof labels]}
-                />
+                {() => (
+                  <>
+                    <ResponsiveBar
+                      data={formattedData}
+                      keys={dataTypes as unknown as string[]}
+                      indexBy={"startTime"}
+                      axisBottom={{ tickSize: 0 }}
+                      axisLeft={null}
+                      enableLabel={false}
+                      enableGridY={false}
+                      labelFormat={""}
+                      margin={{ top: 0, right: 40, bottom: 30, left: 40 }}
+                      motionConfig="stiff"
+                      padding={0.5}
+                      colors={(d) => colors[d.id as keyof typeof colors]}
+                      tooltipLabel={(d) => labels[d.id as keyof typeof labels]}
+                    />
+                  </>
+                )}
               </ClientOnly>
             </div>
           </div>

@@ -1,12 +1,15 @@
-import { useHasMounted } from "lib/hooks/useHasMounted";
+import { useSyncExternalStore } from "react";
 
-function ClientOnly({ children }: { children: React.ReactNode }) {
-  const hasMounted = useHasMounted();
+const emptySubscribe = () => () => {};
 
-  if (!hasMounted) {
-    return null;
-  }
-  return <>{children}</>;
+function ClientOnly({ children }: { children: Function }) {
+  const isServer = useSyncExternalStore(
+    emptySubscribe,
+    () => false,
+    () => true
+  );
+
+  return isServer ? null : children();
 }
 
 export default ClientOnly;

@@ -79,48 +79,52 @@ export const TrackedContributorsTable = ({
           </TableHeader>
         </Table>
         <ClientOnly>
-          {contributors.size > 0 || isLoading ? (
-            <div className="overflow-y-scroll h-60">
-              <Table>
-                <TableHeader className="sr-only">
-                  <TableRow className=" bg-light-slate-3">
-                    <TableHead>Name</TableHead>
-                    <TableHead className="w-4">
-                      <span className="sr-only">Delete</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {isLoading ? (
-                    <LoadingState />
-                  ) : (
-                    <>
-                      {[...contributors].map(([contributor]) => {
-                        return (
-                          <TableRow key={contributor}>
-                            <TableCell className="flex gap-2 items-center w-full">
-                              <Avatar contributor={contributor} size="xsmall" />
-                              <span>{contributor}</span>
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <button
-                                onClick={onRemoveTrackedContributor}
-                                data-contributor={contributor}
-                                disabled={disabled}
-                              >
-                                <FaTrashAlt title="delete" className="text-light-slate-10" />
-                              </button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          ) : (
-            <EmptyState onAddContributors={onAddContributors} disabled={disabled} />
+          {() => (
+            <>
+              {contributors.size > 0 || isLoading ? (
+                <div className="overflow-y-scroll h-60">
+                  <Table>
+                    <TableHeader className="sr-only">
+                      <TableRow className=" bg-light-slate-3">
+                        <TableHead>Name</TableHead>
+                        <TableHead className="w-4">
+                          <span className="sr-only">Delete</span>
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {isLoading ? (
+                        <LoadingState />
+                      ) : (
+                        <>
+                          {[...contributors].map(([contributor]) => {
+                            return (
+                              <TableRow key={contributor}>
+                                <TableCell className="flex gap-2 items-center w-full">
+                                  <Avatar contributor={contributor} size="xsmall" />
+                                  <span>{contributor}</span>
+                                </TableCell>
+                                <TableCell className="text-right">
+                                  <button
+                                    onClick={onRemoveTrackedContributor}
+                                    data-contributor={contributor}
+                                    disabled={disabled}
+                                  >
+                                    <FaTrashAlt title="delete" className="text-light-slate-10" />
+                                  </button>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })}
+                        </>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              ) : (
+                <EmptyState onAddContributors={onAddContributors} disabled={disabled} />
+              )}
+            </>
           )}
         </ClientOnly>
       </div>

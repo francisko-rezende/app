@@ -62,36 +62,44 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
       />
 
       <ClientOnly>
-        {layout !== "grid" ? (
+        {() => (
           <>
-            <ContributorListTableHeaders />
-            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} range={range ?? 30} />
+            {layout !== "grid" ? (
+              <>
+                <ContributorListTableHeaders />
+                <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} range={range ?? 30} />
+              </>
+            ) : (
+              <ContributorCardList contributors={contributors} topic={"*"} range={range ?? 30} />
+            )}
           </>
-        ) : (
-          <ContributorCardList contributors={contributors} topic={"*"} range={range ?? 30} />
         )}
       </ClientOnly>
 
       <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
         <ClientOnly>
-          <div>
-            <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
-          </div>
+          {() => (
+            <>
+              <div>
+                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+              </div>
 
-          <div className="flex flex-col gap-4">
-            <Pagination
-              pages={[]}
-              hasNextPage={meta.hasNextPage}
-              hasPreviousPage={meta.hasPreviousPage}
-              totalPage={meta.pageCount}
-              page={meta.page}
-              onPageChange={function (page: number): void {
-                setPage(page);
-              }}
-              divisor={true}
-              goToPage
-            />
-          </div>
+              <div className="flex flex-col gap-4">
+                <Pagination
+                  pages={[]}
+                  hasNextPage={meta.hasNextPage}
+                  hasPreviousPage={meta.hasPreviousPage}
+                  totalPage={meta.pageCount}
+                  page={meta.page}
+                  onPageChange={function (page: number): void {
+                    setPage(page);
+                  }}
+                  divisor={true}
+                  goToPage
+                />
+              </div>
+            </>
+          )}
         </ClientOnly>
       </div>
     </>

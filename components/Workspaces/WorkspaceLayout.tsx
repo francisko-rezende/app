@@ -49,21 +49,25 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
         <div>
           <TopNav />
           <ClientOnly>
-            <span ref={sidebarRef}>
-              <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={showingSidebar} />
-            </span>
-            {!showingSidebar && (
-              <button
-                onClick={() => setShowingSidebar(true)}
-                className="fixed z-50 border-8 border-solid border-black inset-x-0 top-16 w-fit bg-white rounded-r-md shadow-lg p-2"
-              >
-                <LuArrowRightToLine className="w-4 h-4 text-gray-500" />
-              </button>
+            {() => (
+              <>
+                <span ref={sidebarRef}>
+                  <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={showingSidebar} />
+                </span>
+                {!showingSidebar && (
+                  <button
+                    onClick={() => setShowingSidebar(true)}
+                    className="fixed z-50 border-8 border-solid border-black inset-x-0 top-16 w-fit bg-white rounded-r-md shadow-lg p-2"
+                  >
+                    <LuArrowRightToLine className="w-4 h-4 text-gray-500" />
+                  </button>
+                )}
+              </>
             )}
           </ClientOnly>
         </div>
         <div className="relative flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
-          <ClientOnly>{banner}</ClientOnly>
+          <ClientOnly>{() => <>{banner}</>}</ClientOnly>
           <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px] pb-20">{children}</div>
         </div>
       </div>

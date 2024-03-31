@@ -198,23 +198,27 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
 
               {taggedRepos && taggedRepos.length > 0 ? (
                 <ClientOnly>
-                  <div className="flex flex-col gap-2">
-                    <span className="text-sm text-light-slate-9">Tagged Repositories</span>
-                    {filterOptions &&
-                      filterOptions.length > 0 &&
-                      filterOptions.map(({ full_name, repoIcon, repoName }) => (
-                        <div
-                          onClick={() => handleRepoFilter(full_name)}
-                          key={full_name as string}
-                          className={`${
-                            selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
-                          } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
-                        >
-                          <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                          <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
-                        </div>
-                      ))}
-                  </div>
+                  {() => (
+                    <>
+                      <div className="flex flex-col gap-2">
+                        <span className="text-sm text-light-slate-9">Tagged Repositories</span>
+                        {filterOptions &&
+                          filterOptions.length > 0 &&
+                          filterOptions.map(({ full_name, repoIcon, repoName }) => (
+                            <div
+                              onClick={() => handleRepoFilter(full_name)}
+                              key={full_name as string}
+                              className={`${
+                                selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
+                              } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
+                            >
+                              <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
+                              <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
+                            </div>
+                          ))}
+                      </div>
+                    </>
+                  )}
                 </ClientOnly>
               ) : null}
             </div>
@@ -222,12 +226,17 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
           <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem] flex flex-col gap-10">
             {isLoading ? (
               <ClientOnly>
-                <div className="flex flex-col gap-3">
-                  <div className="flex gap-3">
-                    <SkeletonWrapper radius={100} width={40} height={40} /> <SkeletonWrapper width={200} height={40} />
-                  </div>
-                  <SkeletonWrapper height={300} />
-                </div>
+                {() => (
+                  <>
+                    <div className="flex flex-col gap-3">
+                      <div className="flex gap-3">
+                        <SkeletonWrapper radius={100} width={40} height={40} />{" "}
+                        <SkeletonWrapper width={200} height={40} />
+                      </div>
+                      <SkeletonWrapper height={300} />
+                    </div>
+                  </>
+                )}
               </ClientOnly>
             ) : null}
 
@@ -242,35 +251,43 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
                   <div key={id} className="flex flex-col gap-6 px-1 w-full">
                     <div className="flex items-center gap-3">
                       <ClientOnly>
-                        <Link href={`/user/${login}`} className="flex items-center gap-3">
-                          <Avatar
-                            alt="user profile avatar"
-                            isCircle
-                            size="sm"
-                            avatarURL={`https://www.github.com/${login}.png?size=300`}
-                          />
-                          <strong>{login}</strong>
-                        </Link>
-                        <Link href={`/feed/${id}`}>
-                          <span className="text-xs font-normal text-light-slate-11">
-                            {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
-                          </span>
-                        </Link>
+                        {() => (
+                          <>
+                            <Link href={`/user/${login}`} className="flex items-center gap-3">
+                              <Avatar
+                                alt="user profile avatar"
+                                isCircle
+                                size="sm"
+                                avatarURL={`https://www.github.com/${login}.png?size=300`}
+                              />
+                              <strong>{login}</strong>
+                            </Link>
+                            <Link href={`/feed/${id}`}>
+                              <span className="text-xs font-normal text-light-slate-11">
+                                {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
+                              </span>
+                            </Link>
+                          </>
+                        )}
                       </ClientOnly>
                     </div>
                     <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 lg:max-w-[33rem] sm:py-3 xs:py-2 rounded-xl">
                       <ClientOnly>
-                        <ContributorHighlightCard
-                          title={title}
-                          desc={highlight}
-                          highlightLink={url}
-                          shipped_date={shipped_at}
-                          user={login}
-                          id={id}
-                          type={type}
-                          taggedRepos={tagged_repos}
-                          emojis={emojis}
-                        />
+                        {() => (
+                          <>
+                            <ContributorHighlightCard
+                              title={title}
+                              desc={highlight}
+                              highlightLink={url}
+                              shipped_date={shipped_at}
+                              user={login}
+                              id={id}
+                              type={type}
+                              taggedRepos={tagged_repos}
+                              emojis={emojis}
+                            />
+                          </>
+                        )}
                       </ClientOnly>
                     </div>
                   </div>

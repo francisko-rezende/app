@@ -95,34 +95,38 @@ export const ContributionsTreemap = ({
           <div className="rounded-md overflow-hidden grid place-content-stretch">
             <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
               <ClientOnly>
-                {isLoading ? (
-                  <SkeletonWrapper />
-                ) : (
-                  <ResponsiveTreeMapHtml
-                    data={data}
-                    tile="squarify"
-                    labelSkipSize={12}
-                    innerPadding={4}
-                    leavesOnly
-                    orientLabel={false}
-                    nodeComponent={
-                      projectId === null || orgName === null
-                        ? SpecialNode
-                        : // TODO: Sort this out later
-                          (ContributorNode as <Datum extends object>({
-                            node,
-                            animatedProps,
-                            borderWidth,
-                            enableLabel,
-                            labelSkipSize,
-                          }: NodeProps<Datum>) => JSX.Element)
-                    }
-                    colors={color}
-                    nodeOpacity={1}
-                    borderWidth={0}
-                    onClick={onDrilldown}
-                    motionConfig={"default"}
-                  />
+                {() => (
+                  <>
+                    {isLoading ? (
+                      <SkeletonWrapper />
+                    ) : (
+                      <ResponsiveTreeMapHtml
+                        data={data}
+                        tile="squarify"
+                        labelSkipSize={12}
+                        innerPadding={4}
+                        leavesOnly
+                        orientLabel={false}
+                        nodeComponent={
+                          projectId === null || orgName === null
+                            ? SpecialNode
+                            : // TODO: Sort this out later
+                              (ContributorNode as <Datum extends object>({
+                                node,
+                                animatedProps,
+                                borderWidth,
+                                enableLabel,
+                                labelSkipSize,
+                              }: NodeProps<Datum>) => JSX.Element)
+                        }
+                        colors={color}
+                        nodeOpacity={1}
+                        borderWidth={0}
+                        onClick={onDrilldown}
+                        motionConfig={"default"}
+                      />
+                    )}
+                  </>
                 )}
               </ClientOnly>
             </div>

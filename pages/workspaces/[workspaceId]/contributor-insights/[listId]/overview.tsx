@@ -161,66 +161,72 @@ const ListsOverview = ({
       >
         <div className="flex flex-col w-full gap-4">
           <ClientOnly>
-            <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
-              <HighlightCard
-                label="Commits"
-                icon="commits"
-                metricIncreases={allContributorCommits > prevAllContributorCommits}
-                increased={allContributorCommits > prevAllContributorCommits}
-                value={allContributorCommits}
-                valueLabel="in the last 30d"
-                tooltip=""
-              />
-              <HighlightCard
-                label="Active Contributors"
-                icon="active-contributors"
-                metricIncreases={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
-                increased={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
-                numChanged={allContributorMeta.itemCount - prevAllContributorMeta.itemCount}
-                value={allContributorMeta.itemCount}
-                isLoading={prevAllContributorStatsLoading || allContributorStatsLoading}
-                tooltip={`A contributor who has been active in the last ${range ?? 30} days`}
-              />
-              <HighlightCard
-                label="New Contributors"
-                icon="new-contributors"
-                metricIncreases={newContributorMeta.itemCount > prevNewContributorMeta.itemCount}
-                increased={newContributorMeta.itemCount > prevNewContributorMeta.itemCount}
-                numChanged={newContributorMeta.itemCount - prevNewContributorMeta.itemCount}
-                value={newContributorMeta.itemCount}
-                isLoading={prevNewContributorStatsLoading || newContributorStatsLoading}
-                tooltip="A contributor who has recently made their first contribution to a project."
-              />
-              <HighlightCard
-                label="Alumni Contributors"
-                icon="alumni-contributors"
-                metricIncreases={alumniContributorMeta.itemCount > prevAlumniContributorMeta.itemCount}
-                increased={alumniContributorMeta.itemCount > prevAlumniContributorMeta.itemCount}
-                numChanged={alumniContributorMeta.itemCount - prevAlumniContributorMeta.itemCount}
-                value={alumniContributorMeta.itemCount}
-                isLoading={prevAlumniContributorStatsLoading || alumniContributorStatsLoading}
-                tooltip={`A contributor who has not been active on a project in the last ${range ?? 30} days.`}
-              />
-            </section>
-            <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">
-              <div className="flex flex-col w-full">
-                {isError ? (
-                  <Error errorMessage="Unable to load list of contributors" />
-                ) : (
-                  <ErrorBoundary
-                    fallback={<div className="grid place-content-center">Error loading the list of contributors</div>}
-                  >
-                    <ContributorsList
-                      contributors={contributors}
-                      meta={meta}
-                      isLoading={isLoading}
-                      setPage={setPage}
-                      range={String(range ?? "30")}
-                    />
-                  </ErrorBoundary>
-                )}
-              </div>
-            </section>
+            {() => (
+              <>
+                <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
+                  <HighlightCard
+                    label="Commits"
+                    icon="commits"
+                    metricIncreases={allContributorCommits > prevAllContributorCommits}
+                    increased={allContributorCommits > prevAllContributorCommits}
+                    value={allContributorCommits}
+                    valueLabel="in the last 30d"
+                    tooltip=""
+                  />
+                  <HighlightCard
+                    label="Active Contributors"
+                    icon="active-contributors"
+                    metricIncreases={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
+                    increased={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
+                    numChanged={allContributorMeta.itemCount - prevAllContributorMeta.itemCount}
+                    value={allContributorMeta.itemCount}
+                    isLoading={prevAllContributorStatsLoading || allContributorStatsLoading}
+                    tooltip={`A contributor who has been active in the last ${range ?? 30} days`}
+                  />
+                  <HighlightCard
+                    label="New Contributors"
+                    icon="new-contributors"
+                    metricIncreases={newContributorMeta.itemCount > prevNewContributorMeta.itemCount}
+                    increased={newContributorMeta.itemCount > prevNewContributorMeta.itemCount}
+                    numChanged={newContributorMeta.itemCount - prevNewContributorMeta.itemCount}
+                    value={newContributorMeta.itemCount}
+                    isLoading={prevNewContributorStatsLoading || newContributorStatsLoading}
+                    tooltip="A contributor who has recently made their first contribution to a project."
+                  />
+                  <HighlightCard
+                    label="Alumni Contributors"
+                    icon="alumni-contributors"
+                    metricIncreases={alumniContributorMeta.itemCount > prevAlumniContributorMeta.itemCount}
+                    increased={alumniContributorMeta.itemCount > prevAlumniContributorMeta.itemCount}
+                    numChanged={alumniContributorMeta.itemCount - prevAlumniContributorMeta.itemCount}
+                    value={alumniContributorMeta.itemCount}
+                    isLoading={prevAlumniContributorStatsLoading || alumniContributorStatsLoading}
+                    tooltip={`A contributor who has not been active on a project in the last ${range ?? 30} days.`}
+                  />
+                </section>
+                <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">
+                  <div className="flex flex-col w-full">
+                    {isError ? (
+                      <Error errorMessage="Unable to load list of contributors" />
+                    ) : (
+                      <ErrorBoundary
+                        fallback={
+                          <div className="grid place-content-center">Error loading the list of contributors</div>
+                        }
+                      >
+                        <ContributorsList
+                          contributors={contributors}
+                          meta={meta}
+                          isLoading={isLoading}
+                          setPage={setPage}
+                          range={String(range ?? "30")}
+                        />
+                      </ErrorBoundary>
+                    )}
+                  </div>
+                </section>
+              </>
+            )}
           </ClientOnly>
         </div>
       </ListPageLayout>

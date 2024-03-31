@@ -276,12 +276,18 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
         />
 
         <ClientOnly>
-          <WorkspaceMembersConfig
-            onAddMember={async (username) => await addMember(workspace.id, sessionToken, username)}
-            onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
-            onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
-            members={workspaceMembers}
-          />
+          {() => (
+            <>
+              <WorkspaceMembersConfig
+                onAddMember={async (username) => await addMember(workspace.id, sessionToken, username)}
+                onUpdateMember={async (memberId, role) =>
+                  await updateMember(workspace.id, sessionToken, memberId, role)
+                }
+                onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
+                members={workspaceMembers}
+              />
+            </>
+          )}
         </ClientOnly>
 
         <div className="flex flex-col py-8 gap-4">

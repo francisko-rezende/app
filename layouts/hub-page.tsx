@@ -40,35 +40,43 @@ const HubPageLayout = ({
       <div>
         <Header>
           <ClientOnly>
-            {isLoading ? (
-              <div className="flex justify-between w-full h-46">
-                <div className="flex items-center gap-3">
-                  <SkeletonWrapper radius={10} width={140} height={140} />
-                  <div className="flex flex-col gap-3">
-                    <SkeletonWrapper width={110} height={25} />
-                    <SkeletonWrapper width={200} height={25} />
-                    <SkeletonWrapper classNames="mt-3" width={150} height={30} />
+            {() => (
+              <>
+                {isLoading ? (
+                  <div className="flex justify-between w-full h-46">
+                    <div className="flex items-center gap-3">
+                      <SkeletonWrapper radius={10} width={140} height={140} />
+                      <div className="flex flex-col gap-3">
+                        <SkeletonWrapper width={110} height={25} />
+                        <SkeletonWrapper width={200} height={25} />
+                        <SkeletonWrapper classNames="mt-3" width={150} height={30} />
+                      </div>
+                    </div>
+                    <div>
+                      <SkeletonWrapper classNames="mt-6" width={150} height={40} />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <SkeletonWrapper classNames="mt-6" width={150} height={40} />
-                </div>
-              </div>
-            ) : null}
+                ) : null}
+              </>
+            )}
           </ClientOnly>
 
           {isError ? <div>Error occurred</div> : null}
 
           {insight && (
             <ClientOnly>
-              <InsightHeader
-                insight={insight}
-                repositories={repositories}
-                insightId={id}
-                canEdit={canEdit}
-                workspaceId={workspaceId}
-                owners={owners}
-              />
+              {() => (
+                <>
+                  <InsightHeader
+                    insight={insight}
+                    repositories={repositories}
+                    insightId={id}
+                    canEdit={canEdit}
+                    workspaceId={workspaceId}
+                    owners={owners}
+                  />
+                </>
+              )}
             </ClientOnly>
           )}
         </Header>

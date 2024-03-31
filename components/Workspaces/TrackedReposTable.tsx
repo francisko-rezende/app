@@ -79,46 +79,50 @@ export const TrackedReposTable = ({
           </TableHeader>
         </Table>
         <ClientOnly>
-          {repositories.size > 0 || isLoading ? (
-            <div className="overflow-y-scroll h-60">
-              <Table>
-                <TableHeader className="sr-only">
-                  <TableRow className=" bg-light-slate-3">
-                    <TableHead>Name</TableHead>
-                    <TableHead className="w-4">
-                      <span className="sr-only">Delete</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {isLoading ? (
-                    <LoadingState />
-                  ) : (
-                    <>
-                      {[...repositories].map(([repo]) => {
-                        const [owner] = repo.split("/");
+          {() => (
+            <>
+              {repositories.size > 0 || isLoading ? (
+                <div className="overflow-y-scroll h-60">
+                  <Table>
+                    <TableHeader className="sr-only">
+                      <TableRow className=" bg-light-slate-3">
+                        <TableHead>Name</TableHead>
+                        <TableHead className="w-4">
+                          <span className="sr-only">Delete</span>
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {isLoading ? (
+                        <LoadingState />
+                      ) : (
+                        <>
+                          {[...repositories].map(([repo]) => {
+                            const [owner] = repo.split("/");
 
-                        return (
-                          <TableRow key={repo}>
-                            <TableCell className="flex gap-2 items-center w-full">
-                              <Avatar contributor={owner} size="xsmall" />
-                              <span>{repo}</span>
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <button onClick={onRemoveTrackedRepo} data-repo={repo} disabled={disabled}>
-                                <FaTrashAlt title="delete" className="text-light-slate-10" />
-                              </button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          ) : (
-            <EmptyState onAddRepos={onAddRepos} disabled={disabled} />
+                            return (
+                              <TableRow key={repo}>
+                                <TableCell className="flex gap-2 items-center w-full">
+                                  <Avatar contributor={owner} size="xsmall" />
+                                  <span>{repo}</span>
+                                </TableCell>
+                                <TableCell className="text-right">
+                                  <button onClick={onRemoveTrackedRepo} data-repo={repo} disabled={disabled}>
+                                    <FaTrashAlt title="delete" className="text-light-slate-10" />
+                                  </button>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })}
+                        </>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              ) : (
+                <EmptyState onAddRepos={onAddRepos} disabled={disabled} />
+              )}
+            </>
           )}
         </ClientOnly>
       </div>

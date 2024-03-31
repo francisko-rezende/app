@@ -63,12 +63,16 @@ const ListHeader = ({
           </div>
           <div className="flex items-center gap-2 mt-4" id="contributorCount">
             <ClientOnly>
-              {owners && (
-                <div className="flex gap-2 items-center">
-                  <StackedOwners owners={owners} /> |
-                </div>
+              {() => (
+                <>
+                  {owners && (
+                    <div className="flex gap-2 items-center">
+                      <StackedOwners owners={owners} /> |
+                    </div>
+                  )}
+                  <p>{numberOfContributors} Contributors</p>
+                </>
               )}
-              <p>{numberOfContributors} Contributors</p>
             </ClientOnly>
           </div>
         </div>

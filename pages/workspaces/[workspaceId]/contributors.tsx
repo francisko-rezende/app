@@ -89,20 +89,26 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
       </div>
       <main className="py-8">
         <ClientOnly>
-          {data && contributors.length > 0 ? (
-            <ContributorsList
-              isLoading={isLoading}
-              contributors={contributors}
-              range={`${range}`}
-              meta={data.meta}
-              setPage={setPage}
-            />
-          ) : (
-            <Card className="bg-transparent">
-              <EmptyState
-                onAddContributors={() => router.push(`/workspaces/${workspace.id}/settings#load-contributors-wizard`)}
-              />
-            </Card>
+          {() => (
+            <>
+              {data && contributors.length > 0 ? (
+                <ContributorsList
+                  isLoading={isLoading}
+                  contributors={contributors}
+                  range={`${range}`}
+                  meta={data.meta}
+                  setPage={setPage}
+                />
+              ) : (
+                <Card className="bg-transparent">
+                  <EmptyState
+                    onAddContributors={() =>
+                      router.push(`/workspaces/${workspace.id}/settings#load-contributors-wizard`)
+                    }
+                  />
+                </Card>
+              )}
+            </>
           )}
         </ClientOnly>
       </main>
