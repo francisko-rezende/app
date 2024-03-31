@@ -30,6 +30,15 @@ export type ContributorSSRProps = {
   ogImage: string;
 };
 
+export const getServerSideProps = async (context: UserSSRPropsContext) => {
+  context.res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+  context.res.setHeader("Netlify-Vary", "query=tab");
+  context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=31536000, must-revalidate");
+  context.res.setHeader("Cache-Tag", `user-profile-${context.params?.username}`);
+
+  return await handleUserSSR(context);
+};
+
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
   const { data: contributor, isError: contributorError } = useFetchUser(username);
 
@@ -96,10 +105,6 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
 
 Contributor.PageLayout = ProfileLayout;
 export default Contributor;
-
-export const getServerSideProps = async (context: UserSSRPropsContext) => {
-  return await handleUserSSR(context);
-};
 
 export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }>;
 

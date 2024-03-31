@@ -37,6 +37,20 @@ const updateUser = async ({ data, params }: UseUpdateUserProps) => {
     });
 
     if (res.status === 200) {
+      const purgeResponse = await fetch(`/api/purge-user-profile`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        method: "POST",
+      });
+
+      if (purgeResponse.status !== 202) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to purge user profile cache");
+      }
+
       return res.json();
     } else {
       return false;
